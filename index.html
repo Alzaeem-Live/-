@@ -1,70 +1,54 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Live Stream Player</title>
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        background-color: black;
-      }
-      #video {
-        width: 100vw;
-        height: 100vh;
-        object-fit: contain;
-        background-color: black;
-        display: block;
-      }
-      #watermark {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        opacity: 0.5;
-        font-size: 18px;
-        color: white;
-        pointer-events: none;
-        user-select: none;
-        z-index: 9999;
-        font-family: Arial, sans-serif;
-        text-shadow: 0 0 5px black;
-      }
-    </style>
-  </head>
-  <body>
-    <video id="video" class="video-js vjs-default-skin" controls autoplay muted playsinline></video>
-    <div id="watermark">© حقوقي</div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مشغل M3U8</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
 
-    <script>
-      function getStreamUrl() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("stream");
-      }
+  <video id="video" controls autoplay playsinline></video>
 
-      const video = document.getElementById('video');
-      const streamUrl = getStreamUrl();
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('video');
+    const videoSrc = 'https://shls-masr-enc.edgenextcdn.net/out/v1/d5036cabf11e45bf9d0db410ca135c18/index_46.m3u8'; // ضع رابطك هنا
 
-      if (!streamUrl) {
-        alert("لم يتم تحديد رابط البث في الرابط. استخدم ?stream=رابط.m3u8 أو mp4");
-      } else {
-        if (streamUrl.endsWith(".m3u8")) {
-          if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(streamUrl);
-            hls.attachMedia(video);
-          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = streamUrl;
-          } else {
-            alert("متصفحك لا يدعم HLS");
-          }
-        } else {
-          video.src = streamUrl;
+    if (Hls.isSupported()) {
+      const hls = new Hls({
+        xhrSetup: function(xhr) {
+          xhr.setRequestHeader('Referer', 'https://watchit.com/');
+          xhr.setRequestHeader('User-Agent', 'Mozilla/5.0');
         }
-      }
-    </script>
-  </body>
+      });
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+      video.addEventListener('loadedmetadata', () => {
+        video.play();
+      });
+    }
+  </script>
+
+</body>
 </html>
