@@ -6,28 +6,31 @@
     <title>مشغل فيديو مشفر</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
     <style>
-.dplayer-controller .dplayer-comment-box {
-    display: none !important;
-}
+        .dplayer-controller .dplayer-comment-box {
+            display: none !important;
+        }
 
-
-        body {
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
             background: #162133;
             color: white;
             font-family: Arial, sans-serif;
         }
+
         #player-container {
-            max-width: 1000px;
-            margin: 0 auto;
+            width: 100vw;
+            height: 100vh;
             position: relative;
         }
+
         #dplayer {
             width: 100%;
-            height: 500px;
+            height: 100%;
             background: black;
         }
+
         .refresh-btn {
             position: absolute;
             top: 10px;
@@ -43,48 +46,58 @@
             align-items: center;
             gap: 5px;
         }
+
         .refresh-btn:hover {
             background: rgba(158, 20, 20, 1);
         }
+
         .refresh-icon {
             width: 16px;
             height: 16px;
         }
+
         .error {
             color: red;
             text-align: center;
             padding: 50px;
             font-size: 18px;
         }
-        
-        /* تحسينات لعناصر التحكم في المشغل */
+
         .dplayer-controller {
             direction: ltr !important;
             padding: 0 10px !important;
         }
+
         .dplayer-icons {
             display: flex !important;
             align-items: center !important;
             gap: 10px !important;
         }
+
         .dplayer-volume {
             margin-left: 10px !important;
         }
+
         .dplayer-time {
             margin: 0 10px !important;
         }
+
         .dplayer-setting {
             margin-left: auto !important;
         }
+
         .dplayer-full {
             margin-left: 10px !important;
         }
+
         .dplayer-play-icon {
             margin: 0 !important;
         }
+
         .dplayer-full-in-icon {
             margin-left: 1000px !important;
         }
+
         @media (max-width: 768px) {
             .dplayer-controller {
                 flex-wrap: wrap !important;
@@ -96,7 +109,6 @@
                 margin-top: 5px !important;
             }
         }
-      
     </style>
 </head>
 <body>
@@ -113,13 +125,11 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
     <script>
-        // دالة لاستخراج الباراميتر من URL
         function getUrlParam(name) {
             const url = new URL(window.location.href);
             return url.searchParams.get(name);
         }
 
-        // فك تشفير الرابط
         function decodeUrl(encoded) {
             try {
                 return decodeURIComponent(escape(atob(encoded)));
@@ -128,7 +138,6 @@
             }
         }
 
-        // تهيئة المشغل
         function initPlayer() {
             const encodedUrl = getUrlParam('url');
             
@@ -155,7 +164,7 @@
                     },
                     autoplay: true,
                     theme: '#9e1414',
-                  danmaku: false
+                    danmaku: false
                 });
                 
                 dp.on('error', () => {
@@ -169,7 +178,6 @@
             }
         }
 
-        // بدء التشغيل عند تحميل الصفحة
         window.onload = initPlayer;
     </script>
 </body>
