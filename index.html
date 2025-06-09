@@ -1,16 +1,7 @@
-<video id="video" controls autoplay></video>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<script>
-  const video = document.getElementById('video');
-  const src = "https://archive.org/download/iptv_20250315/index_48.m3u8";
-
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(src);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = src;
-    video.addEventListener('loadedmetadata', () => video.play());
-  }
-</script>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+        webkitAllowFullScreen mozallowfullscreen allowfullscreen 
+        width="100%" height="100%" frameborder="0" allow="autoplay" 
+        src="https://anym3u8player.com/tv/p.php?url=https%3A%2F%2Farchive.org%2Fdownload%2Fiptv_20250315%2Findex_48.m3u8">
+    </iframe>
+</div>
