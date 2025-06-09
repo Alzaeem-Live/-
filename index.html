@@ -1,7 +1,54 @@
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
-    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-        webkitAllowFullScreen mozallowfullscreen allowfullscreen 
-        width="640" height="360" frameborder="0" allow="autoplay" 
-        src="https://anym3u8player.com/tv/p.php?url=https%3A%2F%2Farchive.org%2Fdownload%2Fiptv_20250315%2Findex_48.m3u8">
-    </iframe>
-</div>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مشغل M3U8</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 720px;
+      height: auto;
+      border: 2px solid #fff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>مشغل M3U8 مباشر</h1>
+  <video id="video" controls autoplay></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('video');
+    const videoSrc = 'https://archive.org/download/iptv_20250315/index_48.m3u8';
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play();
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+      video.addEventListener('loadedmetadata', function () {
+        video.play();
+      });
+    } else {
+      alert("متصفحك لا يدعم تشغيل ملفات M3U8.");
+    }
+  </script>
+
+</body>
+</html>
