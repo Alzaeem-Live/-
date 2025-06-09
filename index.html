@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>مشغل فيديو مشفر</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css" />
     <style>
+        /* نفس التنسيقات كما هي */
         .dplayer-controller .dplayer-comment-box {
             display: none !important;
         }
@@ -62,53 +63,6 @@
             padding: 50px;
             font-size: 18px;
         }
-
-        .dplayer-controller {
-            direction: ltr !important;
-            padding: 0 10px !important;
-        }
-
-        .dplayer-icons {
-            display: flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-        }
-
-        .dplayer-volume {
-            margin-left: 10px !important;
-        }
-
-        .dplayer-time {
-            margin: 0 10px !important;
-        }
-
-        .dplayer-setting {
-            margin-left: auto !important;
-        }
-
-        .dplayer-full {
-            margin-left: 10px !important;
-        }
-
-        .dplayer-play-icon {
-            margin: 0 !important;
-        }
-
-        .dplayer-full-in-icon {
-            margin-left: 1000px !important;
-        }
-
-        @media (max-width: 768px) {
-            .dplayer-controller {
-                flex-wrap: wrap !important;
-                padding-bottom: 10px !important;
-            }
-            .dplayer-bar-wrap {
-                order: 1 !important;
-                width: 100% !important;
-                margin-top: 5px !important;
-            }
-        }
     </style>
 </head>
 <body>
@@ -125,36 +79,22 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
     <script>
-        function getUrlParam(name) {
-            const url = new URL(window.location.href);
-            return url.searchParams.get(name);
-        }
+        // رابط الفيديو المشفر base64 (ضع هنا رابط الفيديو المشفر)
+        const encodedUrl = "aHR0cHM6Ly9zaGxzLW1hc3IyLXByb2QtZHUicy5zaGFoaWQubmV0L291dC92MS9mNjgzNjg1MjQyYjU0OWY0OGVhOGE1MTc..."; 
 
         function decodeUrl(encoded) {
             try {
                 return decodeURIComponent(escape(atob(encoded)));
-            } catch (e) {
+            } catch {
                 return null;
             }
         }
 
-        function initPlayer() {
-            const encodedUrl = getUrlParam('url');
-            
-            if (!encodedUrl) {
-                document.getElementById('player-container').innerHTML = 
-                    '<div class="error">لم يتم توفير رابط الفيديو</div>';
-                return;
-            }
-            
-            const videoUrl = decodeUrl(encodedUrl);
-            
-            if (!videoUrl) {
-                document.getElementById('player-container').innerHTML = 
-                    '<div class="error">رابط الفيديو غير صالح</div>';
-                return;
-            }
-            
+        const videoUrl = decodeUrl(encodedUrl);
+
+        if (!videoUrl) {
+            document.getElementById('player-container').innerHTML = '<div class="error">رابط الفيديو غير صالح</div>';
+        } else {
             try {
                 const dp = new DPlayer({
                     container: document.getElementById('dplayer'),
@@ -166,19 +106,13 @@
                     theme: '#9e1414',
                     danmaku: false
                 });
-                
                 dp.on('error', () => {
-                    document.getElementById('player-container').innerHTML = 
-                        '<div class="error">حدث خطأ أثناء تشغيل الفيديو</div>';
+                    document.getElementById('player-container').innerHTML = '<div class="error">حدث خطأ أثناء تشغيل الفيديو</div>';
                 });
-                
-            } catch (e) {
-                document.getElementById('player-container').innerHTML = 
-                    '<div class="error">تعذر تحميل مشغل الفيديو</div>';
+            } catch {
+                document.getElementById('player-container').innerHTML = '<div class="error">تعذر تحميل مشغل الفيديو</div>';
             }
         }
-
-        window.onload = initPlayer;
     </script>
 </body>
 </html>
