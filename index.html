@@ -2,53 +2,20 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>مشغل M3U8</title>
+  <title>تشغيل AnyM3U8Player داخل موقعي</title>
   <style>
     body {
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-
-    video {
-      width: 100%;
-      max-width: 720px;
-      height: auto;
-      border: 2px solid #fff;
-      border-radius: 10px;
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
     }
   </style>
 </head>
 <body>
-
-  <h1>مشغل M3U8 مباشر</h1>
-  <video id="video" controls autoplay></video>
-
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    const video = document.getElementById('video');
-    const videoSrc = 'https://archive.org/download/iptv_20250315/index_48.m3u8';
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = videoSrc;
-      video.addEventListener('loadedmetadata', function () {
-        video.play();
-      });
-    } else {
-      alert("متصفحك لا يدعم تشغيل ملفات M3U8.");
-    }
-  </script>
-
+  <iframe src="https://anym3u8player.com/tv/p.php?url=https%3A%2F%2Farchive.org%2Fdownload%2Fiptv_20250315%2Findex_48.m3u8" allowfullscreen></iframe>
 </body>
 </html>
