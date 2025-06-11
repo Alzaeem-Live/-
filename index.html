@@ -1,118 +1,43 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>مشغل فيديو مشفر</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css" />
-    <style>
-.dplayer-controller .dplayer-comment-box {
-    display: none !important;
-}
+<div id="Player" style='height: 562px; width: 100%;'>SportP2</div>
 
+<script>
+  // استخراج الرابط من الباراميتر "stream" في الـ URL
+  function getStreamUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("stream");
+  }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: #162133;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+  const streamUrl = getStreamUrl();
 
-        #player-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
+  // التحقق إذا كان في رابط فعلاً
+  if (streamUrl) {
+    player = new Clappr.Player({
+      source: streamUrl,
+      mimeType: "application/x-mpegURL",
+      maxBufferLength: 20,
+      autoPlay: true,
+      height: "100%",
+      width: "100%",
+      parentId: "#Player",
+      mediacontrol: {
+        seekbar: "#0066cc",
+        buttons: "#fff"
+      },
+    });
+  } else {
+    document.getElementById("Player").innerText = "رابط البث غير موجود في عنوان الصفحة.";
+  }
+</script>
 
-        #dplayer {
-            width: 100%;
-            height: 100%;
-            background: black;
-        }
-
-        .refresh-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-            background: rgba(158, 20, 20, 0.7);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .refresh-btn:hover {
-            background: rgba(158, 20, 20, 1);
-        }
-
-        .refresh-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-            padding: 50px;
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
-    <div id="player-container">
-        <button class="refresh-btn" onclick="location.reload()">
-            <svg class="refresh-icon" viewBox="0 0 24 24" fill="white">
-                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-            </svg>
-            تحديث
-        </button>
-        <div id="dplayer"></div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
-    <script>
-        // رابط الفيديو المشفر base64 (ضع هنا رابط الفيديو المشفر)
-        const encodedUrl = "aHR0cHM6Ly9zaGxzLW1hc3ItcHJvZC1kdWIuc2hhaGlkLm5ldC9vdXQvdjEvZDUwMzZjYWJmMTFlNDViZjlkMGRiNDEwY2ExMzVjMTgvaW5kZXgubTN1OA=="; 
-
-        function decodeUrl(encoded) {
-            try {
-                return decodeURIComponent(escape(atob(encoded)));
-            } catch {
-                return null;
-            }
-        }
-
-        const videoUrl = decodeUrl(encodedUrl);
-
-        if (!videoUrl) {
-            document.getElementById('player-container').innerHTML = '<div class="error">رابط الفيديو غير صالح</div>';
-        } else {
-            try {
-                const dp = new DPlayer({
-                    container: document.getElementById('dplayer'),
-                    video: {
-                        url: videoUrl,
-                        type: videoUrl.includes('.m3u8') ? 'hls' : 'normal',
-                    },
-                    autoplay: true,
-                    theme: '#9e1414',
-                    danmaku: false
-                });
-                dp.on('error', () => {
-                    document.getElementById('player-container').innerHTML = '<div class="error">حدث خطأ أثناء تشغيل الفيديو</div>';
-                });
-            } catch {
-                document.getElementById('player-container').innerHTML = '<div class="error">تعذر تحميل مشغل الفيديو</div>';
-            }
-        }
-    </script>
-</body>
-</html>
+<style>
+  .media-control[data-media-control]:before {
+    content: "شاهد جميع المباريات علي موقع قالب كورة في لايف";
+    color: #fff;
+    text-align: center;
+    display: block;
+    font-weight: 800;
+    font-size: 16px;
+    top: 35px;
+    position: relative;
+  }
+</style>
