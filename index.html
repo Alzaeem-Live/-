@@ -1,37 +1,7 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title>مشغل مباشر</title>
-  <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-  <style>
-    body { margin: 0; background: #000; color: white; font-family: sans-serif; }
-    #title { text-align: center; font-size: 20px; font-weight: bold; padding: 10px; }
-    #Player { width: 100%; height: 562px; }
-  </style>
-</head>
-<body>
-
-  <!-- عنوان خارجي منفصل عن المشغل -->
-  <div id="title">SportP2</div>
-
-  <!-- مشغل Clappr بدون محتوى -->
-  <div id="Player"></div>
-
-  <script>
-    new Clappr.Player({
-      source: "https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass1buoi/master.m3u8",
-      mimeType: "application/x-mpegURL",
-      autoPlay: true,
-      parentId: "#Player",
-      height: "100%",
-      width: "100%",
-      mediacontrol: {
-        seekbar: "#0066cc",
-        buttons: "#fff"
-      }
-    });
-  </script>
-
-</body>
-</html>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+        webkitAllowFullScreen mozallowfullscreen allowfullscreen 
+        width="640" height="360" frameborder="0" allow="autoplay" 
+        src="https://anym3u8player.com/tv/p.php?url=https%3A%2F%2Fliveakgr.alkassdigital.net%2Fhls%2Flive%2F2097037%2FAlkass1buoi%2Fmaster.m3u8">
+    </iframe>
+</div>
